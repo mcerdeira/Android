@@ -6,22 +6,27 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.math.Vector2;
 import com.me.mygdxgame.controller.GameController;
 import com.me.mygdxgame.model.Block;
-import com.me.mygdxgame.views.Renderer;
+import com.me.mygdxgame.views.GameRenderer;
 
 public class GameScreen implements Screen, InputProcessor {
 	private Block block;
 	private GameController gamecontroller;
-	private Renderer renderer;
+	private GameRenderer renderer;
 	private int width, height;
+	
+	public GameScreen(){
+		block = new Block(new Vector2(7, 2));
+		renderer = new GameRenderer(block);
+		gamecontroller = new GameController(block);
+		Gdx.input.setInputProcessor(this);
+	}
 	
 	@Override
 	public void show() {
-		block = new Block();
-		renderer = new Renderer(block);
-		gamecontroller = new GameController(block);
-		Gdx.input.setInputProcessor(this);		
+		// called when this screen is set as the screen with game.setScreen();
 	}
 		
 	@Override
@@ -34,14 +39,14 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
+		renderer.setSize(width, height);
+		this.width = width;
+		this.height = height;		
 	}
 
 	@Override
 	public void hide() {
-		// TODO Auto-generated method stub
-		
+		Gdx.input.setInputProcessor(null);		
 	}
 
 	@Override
@@ -64,16 +69,26 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
+		if (keycode == Keys.LEFT){
+			gamecontroller.leftPressed();
+		}
+		if (keycode == Keys.RIGHT){
+			gamecontroller.rightPressed();
+		}
+		return true;
 	}
-
+	
 	@Override
 	public boolean keyUp(int keycode) {
-		// TODO Auto-generated method stub
-		return false;
+		if (keycode == Keys.LEFT){
+			gamecontroller.leftReleased();
+		}
+		if (keycode == Keys.RIGHT){
+			gamecontroller.rightReleased();
+		}
+		return true;
 	}
-
+	
 	@Override
 	public boolean keyTyped(char character) {
 		// TODO Auto-generated method stub
@@ -82,14 +97,30 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
+		if (!Gdx.app.getType().equals(ApplicationType.Android)){
+			return false;
+		}
+		if (x < width / 2 && y > height / 2) {
+			gamecontroller.leftPressed();
+		}
+		if (x > width / 2 && y > height / 2) {
+			gamecontroller.rightPressed();
+		}
+	return true;
 	}
-
+	
 	@Override
 	public boolean touchUp(int x, int y, int pointer, int button) {
-		// TODO Auto-generated method stub
-		return false;
+		if (!Gdx.app.getType().equals(ApplicationType.Android)){
+			return false;
+		}
+		if (x < width / 2 && y > height / 2) {
+			gamecontroller.leftReleased();
+		}
+		if (x > width / 2 && y > height / 2) {
+			gamecontroller.rightReleased();
+		}
+		return true;
 	}
 
 	@Override
@@ -109,5 +140,4 @@ public class GameScreen implements Screen, InputProcessor {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

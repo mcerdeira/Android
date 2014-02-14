@@ -1,5 +1,6 @@
 package com.me.mygdxgame.model;
 
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 public class Block {
@@ -14,8 +15,12 @@ public class Block {
 	Vector2 position = new Vector2();
 	Vector2 acceleration = new Vector2();
 	Vector2 velocity = new Vector2();
+	Rectangle 	bounds = new Rectangle();
 	
-	public Block(){
+	public Block(Vector2 position){
+		this.position = position;
+		this.bounds.height = SIZE;
+		this.bounds.width = SIZE;
 		this.state = State.IDLE;
 	}
 	

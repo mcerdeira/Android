@@ -2,26 +2,24 @@ package com.me.mygdxgame.views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.me.mygdxgame.model.Block;
 
-public class Renderer {
+public class GameRenderer {
 	private static final float CAMERA_WIDTH = 10f;
 	private static final float CAMERA_HEIGHT = 7f;
-	private static final float RUNNING_FRAME_DURATION = 0.06f;
 	private OrthographicCamera cam;
 	private SpriteBatch spriteBatch;
 	private Block block;
-	private TextureRegion blockTexture;
+	private Texture blockTexture;
 	
 	private int width;
 	private int height;
 	private float ppuX;	// pixels per unit on the X axis
 	private float ppuY;	// pixels per unit on the Y axis
 	
-	public Renderer(Block block){
+	public GameRenderer(Block block){
 		this.block = block;
 		this.cam = new OrthographicCamera(CAMERA_WIDTH, CAMERA_HEIGHT);
 		this.cam.position.set(CAMERA_WIDTH / 2f, CAMERA_HEIGHT / 2f, 0);
@@ -30,9 +28,8 @@ public class Renderer {
 		loadTextures();
 	}
 	
-	private void loadTextures() {
-		TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("images/textures/textures.pack"));
-		blockTexture = atlas.findRegion("block");
+	private void loadTextures() {		
+		blockTexture = new Texture(Gdx.files.internal("images/block.png"));
 	}
 	
 	public void setSize (int w, int h) {
