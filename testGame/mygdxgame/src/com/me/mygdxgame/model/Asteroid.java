@@ -12,7 +12,7 @@ public class Asteroid
 	private Rectangle bounds = new Rectangle();
 	private Texture texture;
 	private float SPEED;
-	private StarShip starship;
+	private StarShip starship;	
 	Vector2 position = new Vector2();
 	State state;
 	
@@ -38,7 +38,7 @@ public class Asteroid
 	
 	public void checkCollision()
 	{
-		if(starship.bounds.overlaps(this.bounds)){
+		if(starship.hitBox.overlaps(this.bounds)){
 			starship.Hit();
 			this.state = State.DEAD;
 		}
