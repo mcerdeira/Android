@@ -3,70 +3,87 @@ package com.me.mygdxgame.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.me.mygdxgame.model.AsteroidManager;
 import com.me.mygdxgame.model.StarShip;
 import com.me.mygdxgame.model.StarShip.State;
 
-public class GameController {
-	enum Keys {
+public class GameController 
+{
+	enum Keys 
+	{
 		LEFT, RIGHT
 	}
+	private StarShip starship;
+	private AsteroidManager asteroidmanager;
 	
-	private StarShip block;
 	
 	static Map<Keys, Boolean> keys = new HashMap<GameController.Keys, Boolean>();
-	static {
+	static 
+	{
 		keys.put(Keys.LEFT, false);
 		keys.put(Keys.RIGHT, false);
 	};
 	
-	public GameController(StarShip starship) {
-		this.block = starship;
+	public GameController(StarShip starship, AsteroidManager asteroidmanager) 
+	{
+		this.starship = starship;
+		this.asteroidmanager = asteroidmanager;
 	}
 	
 	// ** Key presses and touches **************** //
 
-	public void leftPressed() {
+	public void leftPressed() 
+	{
 		keys.get(keys.put(Keys.LEFT, true));
 	}
 	
-	public void rightPressed() {
+	public void rightPressed() 
+	{
 		keys.get(keys.put(Keys.RIGHT, true));
 	}
 
-	public void leftReleased() {
+	public void leftReleased() 
+	{
 		keys.get(keys.put(Keys.LEFT, false));
 	}
 	
-	public void rightReleased() {
+	public void rightReleased() 
+	{
 		keys.get(keys.put(Keys.RIGHT, false));
 	}
 
 	/** The main update method **/
-	public void update(float delta) {
+	public void update(float delta) 
+	{
 		processInput();
-		block.update(delta);
+		starship.update(delta);
+		asteroidmanager.update(delta);
 	}
 	
 	/** Change Block state and parameters based on input controls **/
-	private void processInput() {
-		if (keys.get(Keys.LEFT)) {
+	private void processInput() 
+	{
+		if (keys.get(Keys.LEFT)) 
+		{
 			// left is pressed
-			block.setState(State.MOVING);
-			block.getVelocity().x = -block.SPEED;
+			starship.setState(State.MOVING);
+			starship.getVelocity().x = -starship.SPEED;
 		}
-		if (keys.get(Keys.RIGHT)) {
+		if (keys.get(Keys.RIGHT)) 
+		{
 			// left is pressed
-			block.setState(State.MOVING);
-			block.getVelocity().x = block.SPEED;
+			starship.setState(State.MOVING);
+			starship.getVelocity().x = starship.SPEED;
 		}
 		// need to check if both or none direction are pressed, then Bob is idle
 		if ((keys.get(Keys.LEFT) && keys.get(Keys.RIGHT)) ||
-		    (!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) {
-			block.setState(State.IDLE);
+		    (!keys.get(Keys.LEFT) && !(keys.get(Keys.RIGHT)))) 
+		{
+			starship.setState(State.IDLE);
 			// acceleration is 0 on the x
-			block.getAcceleration().x = 0;
+			starship.getAcceleration().x = 0;
 			// horizontal speed is 0
-			block.getVelocity().x = 0;	
+			starship.getVelocity().x = 0;	
 		}
 	}
 }

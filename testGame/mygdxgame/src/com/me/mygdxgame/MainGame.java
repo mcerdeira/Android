@@ -11,14 +11,16 @@ public class MainGame extends Game{
 	Texture asteroidTexture;
 	
 	@Override
-	public void create() {
+	public void create() 
+	{
 		Texture.setEnforcePotImages(false);
 		loadTextures();		
 		mainscreen = new GameScreen(starshipTexture, asteroidTexture);
 		this.setScreen(mainscreen);
 	}
 	
-	private void loadTextures() {		
+	private void loadTextures() 
+	{		
 		starshipTexture = new Texture(Gdx.files.internal("images/ship.png"));
 		asteroidTexture = new Texture(Gdx.files.internal("images/asteroid.png"));
 	}
