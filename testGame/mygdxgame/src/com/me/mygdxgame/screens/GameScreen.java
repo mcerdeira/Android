@@ -6,21 +6,24 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.me.mygdxgame.controller.GameController;
-import com.me.mygdxgame.model.Block;
+import com.me.mygdxgame.model.*;
 import com.me.mygdxgame.views.GameRenderer;
 
 public class GameScreen implements Screen, InputProcessor {
-	private Block block;
+	private StarShip starship; // The only existing instance of starship
 	private GameController gamecontroller;
 	private GameRenderer renderer;
 	private int width, height;
+	private AsteroidManager asteroidmanager;
 	
-	public GameScreen(){
-		block = new Block(new Vector2(7, 2));
-		renderer = new GameRenderer(block);
-		gamecontroller = new GameController(block);
+	public GameScreen(	Texture starshipTexture, Texture asteroidTexture){
+		starship = new StarShip(new Vector2(7, 0), starshipTexture);
+		asteroidmanager = new AsteroidManager(10, asteroidTexture, starship);
+		renderer = new GameRenderer(starship, asteroidmanager);
+		gamecontroller = new GameController(starship);
 		Gdx.input.setInputProcessor(this);
 	}
 	

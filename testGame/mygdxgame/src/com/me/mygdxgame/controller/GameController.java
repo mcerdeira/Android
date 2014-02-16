@@ -3,15 +3,15 @@ package com.me.mygdxgame.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.me.mygdxgame.model.Block;
-import com.me.mygdxgame.model.Block.State;
+import com.me.mygdxgame.model.StarShip;
+import com.me.mygdxgame.model.StarShip.State;
 
 public class GameController {
 	enum Keys {
 		LEFT, RIGHT
 	}
 	
-	private Block block;
+	private StarShip block;
 	
 	static Map<Keys, Boolean> keys = new HashMap<GameController.Keys, Boolean>();
 	static {
@@ -19,8 +19,8 @@ public class GameController {
 		keys.put(Keys.RIGHT, false);
 	};
 	
-	public GameController(Block block) {
-		this.block = block;
+	public GameController(StarShip starship) {
+		this.block = starship;
 	}
 	
 	// ** Key presses and touches **************** //
